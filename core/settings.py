@@ -26,8 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
-    'rest_framework',
     'oauth2_provider',
+    'rest_framework',
     'drf_yasg',
     'product',
     'authentication',
@@ -70,20 +70,38 @@ DATABASES = {
     }
 }
 
-LOGIN_URL = '/admin/login/'
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Your App API - Swagger': {
+            'type': 'oauth2',
+            'tokenUrl': '/o/token/',
+            'flow': 'password',
+            'scopes': {
+                "read": "Read scope",
+                "write": "Write scope"
+            }
+        }
+    },
+    # 'OAUTH2_CONFIG': {
+    #     'clientId': 'ZBJY5SYfhDaR2NSrzxHibYFPPL4qsJOaxDOufnPP',
+    #     'clientSecret': '2jcMIp66fyUtYtfQx15R5qD1UTb8PWp0utSInX1MPpKm7KotMkHZD3lYmKLN90D4xWDDZn8SrBPqoLTPS7M0rNFaoAlqXMiqUhUZaVH5Jce8mjcHGfhx01dkCuKI6Jvp',
+    #     'appName': 'aplicacao_delinea'
+    # },
+}
+
+# LOGIN_URL = '/admin/login/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    # ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # )
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 OAUTH2_PROVIDER = {
-    # this is the list of available scopes
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
 }
 
@@ -127,3 +145,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.User'
+
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'home'

@@ -33,7 +33,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api/users/', include('authentication.urls')),
-    # path('auth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('api/v1/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     
