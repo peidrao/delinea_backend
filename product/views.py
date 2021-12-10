@@ -35,8 +35,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
+        queryset = self.filter_queryset(self.get_queryset()).filter(owner=request.user)
         serializer = ProductAllSerializer(queryset, many=True)
         return Response(serializer.data)
 

@@ -72,34 +72,54 @@ class ProductTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-    # TODO: 403 - You do not have permission to perform this action
     def test_search_product_by_title(self):
         for _ in range(0, 5):
-            baker.make(Product, title='Macbook')
+            baker.make(Product, title='Macbook', owner=self.test_user)
         for _ in range(0, 5):
-            baker.make(Product, title='Iphone')
+            baker.make(Product, title='Iphone', owner=self.test_user)
 
         url = f"{reverse('products_urls:products-list')}?title=Iphone"
 
         response = self.client.get(
             url, format='json', HTTP_AUTHORIZATION=self.auth)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(5, len(response.data['results']))
+        self.assertEqual(5, len(response.data))
 
-    # TODO: 403 - You do not have permission to perform this action
     def test_search_product_by_price(self):
         for _ in range(0, 5):
-            baker.make(Product, price=11.90)
+            baker.make(Product, price=11.90, owner=self.test_user)
         for _ in range(0, 5):
-            baker.make(Product, price=11.91)
+            baker.make(Product, price=11.91, owner=self.test_user)
         for _ in range(0, 5):
-            baker.make(Product, title=11.95)
+            baker.make(Product, price=11.95, owner=self.test_user)
         for _ in range(0, 5):
-            baker.make(Product, title=12.90)
+            baker.make(Product, price=12.90, owner=self.test_user)
 
         url = f"{reverse('products_urls:products-list')}?price=11.91"
 
         response = self.client.get(
             url, format='json', HTTP_AUTHORIZATION=self.auth)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(5, len(response.data['results']))
+        self.assertEqual(5, len(response.data))
+
+    def test_patch_product(self):
+        product = baker.make(Product, owner=self.test_user, title='xyz', content='teste', price=125.99)
+        
+        url = reverse('products_urls:products-detail', args=[product.id])
+
+        body = {
+            'title': 'New Product',
+            'content': 'New Content',
+            'price': 259.35
+        }
+
+        response = self.client.patch(url,body,  HTTP_AUTHORIZATION=self.auth)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Product.objects.get().title, 'New Product')
+        self.assertEqual(Product.objects.get().content, 'New Content')
+        self.assertEqual(Product.objects.get().price, 259.35)
+
+
+
+# TODO: verificar se o outra pessoa pode acessar o produto de outro
