@@ -18,11 +18,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     search_fields = (
         'title',
         'price'
-    )   
-
-    def partial_update(self, request, *args, **kwargs):
-        return super().partial_update(request, *args, **kwargs)
-
+    )
 
     def create(self, request, *args, **kwargs):
         serializer = ProductSerializer(data=request.data)

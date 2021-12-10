@@ -13,7 +13,7 @@ class ProductPermission(permissions.BasePermission):
         if request.method == 'GET':
             if Product.objects.filter(owner=request.user).exists():
                 return True
-        if request.method == 'PATCH':
+        if request.method in ['PATCH', 'DELETE']:
             if Product.objects.filter(id=request.parser_context['kwargs']['pk'], owner=request.user):
                 return True
 
@@ -30,7 +30,6 @@ class ProductPermission(permissions.BasePermission):
 class IsOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-
         if request.user:
             return obj.owner == request.user
         else:
