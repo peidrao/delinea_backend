@@ -1,5 +1,4 @@
 from django.urls import reverse
-import model_bakery
 from rest_framework import status
 from rest_framework.test import APITestCase
 from model_bakery import baker
@@ -103,8 +102,9 @@ class ProductTests(APITestCase):
         self.assertEqual(5, len(response.data))
 
     def test_patch_product(self):
-        product = baker.make(Product, owner=self.test_user, title='xyz', content='teste', price=125.99)
-        
+        product = baker.make(Product, owner=self.test_user,
+                             title='xyz', content='teste', price=125.99)
+
         url = reverse('products_urls:products-detail', args=[product.id])
 
         body = {
@@ -113,13 +113,31 @@ class ProductTests(APITestCase):
             'price': 259.35
         }
 
-        response = self.client.patch(url,body,  HTTP_AUTHORIZATION=self.auth)
+        response = self.client.patch(url, body,  HTTP_AUTHORIZATION=self.auth)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Product.objects.get().title, 'New Product')
         self.assertEqual(Product.objects.get().content, 'New Content')
         self.assertEqual(Product.objects.get().price, 259.35)
 
+    def test_user_not_authorized_to_destroy(self):
+        product = baker.make(Product)
+        url = reverse('products_urls:products-detail', args=[product.id])
 
+        response = self.client.delete(url, HTTP_AUTHORIZATION=self.auth)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-# TODO: verificar se o outra pessoa pode acessar o produto de outro
+    def test_user_not_authorized_to_patch(self):
+        product = baker.make(Product, title='xyz',
+                             content='teste', price=125.99)
+
+        url = reverse('products_urls:products-detail', args=[product.id])
+
+        body = {
+            'title': 'New Product',
+            'content': 'New Content',
+            'price': 259.35
+        }
+
+        response = self.client.patch(url, body, HTTP_AUTHORIZATION=self.auth)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

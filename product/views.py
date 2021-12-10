@@ -19,6 +19,13 @@ class ProductViewSet(viewsets.ModelViewSet):
         'title',
         'price'
     )
+    
+    # def destroy(self, request, *args, **kwargs):
+    #     try:
+    #         instance = self.get_object()
+    #         self.perform_destroy(instance)
+    #     except:
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
     def create(self, request, *args, **kwargs):
         serializer = ProductSerializer(data=request.data)

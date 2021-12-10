@@ -2,7 +2,7 @@ from drf_yasg.openapi import Response
 from rest_framework import permissions
 
 from product.models import Product
-
+from .exceptions import UnauthorizedUserException
 
 class ProductPermission(permissions.BasePermission):
 
@@ -16,6 +16,9 @@ class ProductPermission(permissions.BasePermission):
         if request.method in ['PATCH', 'DELETE']:
             if Product.objects.filter(id=request.parser_context['kwargs']['pk'], owner=request.user):
                 return True
+            else:
+                raise UnauthorizedUserException
+            
 
         if request.method == 'POST':
             return True
