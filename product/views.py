@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework import serializers, viewsets, status, filters
+from rest_framework import viewsets, status, filters
 from .models import Product
 from .serializers import ProductSerializer, ProductAllSerializer
 from .filters import ProductTitleFilter, ProductPriceFilter
@@ -10,11 +10,11 @@ class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwner, ProductPermission]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
-    filter_backends = (
+    filter_backends = [
+        filters.SearchFilter,
         ProductPriceFilter,
         ProductTitleFilter,
-        filters.SearchFilter,
-    )
+    ]
     search_fields = (
         'title',
         'price'
@@ -34,9 +34,10 @@ class ProductViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def list(self, request):
-        serializer = ProductAllSerializer(
-            self.queryset.filter(owner=request.user), many=True)
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        serializer = ProductAllSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):

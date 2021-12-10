@@ -81,8 +81,8 @@ class ProductTests(APITestCase):
 
         url = f"{reverse('products_urls:products-list')}?title=Iphone"
 
-    
-        response = self.client.get(url, format='json', HTTP_AUTHORIZATION=self.auth)
+        response = self.client.get(
+            url, format='json', HTTP_AUTHORIZATION=self.auth)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(5, len(response.data['results']))
 
@@ -98,7 +98,8 @@ class ProductTests(APITestCase):
             baker.make(Product, title=12.90)
 
         url = f"{reverse('products_urls:products-list')}?price=11.91"
-    
-        response = self.client.get(url, format='json', HTTP_AUTHORIZATION=self.auth)
+
+        response = self.client.get(
+            url, format='json', HTTP_AUTHORIZATION=self.auth)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(5, len(response.data['results']))

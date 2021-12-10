@@ -1,3 +1,4 @@
+from re import M
 import django_heroku
 import os
 from pathlib import Path
@@ -85,11 +86,11 @@ SWAGGER_SETTINGS = {
             }
         }
     },
-    # 'OAUTH2_CONFIG': {
-    #     'clientId': 'ZBJY5SYfhDaR2NSrzxHibYFPPL4qsJOaxDOufnPP',
-    #     'clientSecret': '2jcMIp66fyUtYtfQx15R5qD1UTb8PWp0utSInX1MPpKm7KotMkHZD3lYmKLN90D4xWDDZn8SrBPqoLTPS7M0rNFaoAlqXMiqUhUZaVH5Jce8mjcHGfhx01dkCuKI6Jvp',
-    #     'appName': 'aplicacao_delinea'
-    # },
+    'OAUTH2_CONFIG': {
+        'clientId': 'q7LmUV8eU32Bek4Ne25sPbKzxg3j0CwQXDlD4A7Z',
+        'clientSecret': '01JRxn8ctNoOcWloYPqpMPNmCo4jBMWDpVx7bftk788SYo8jtJNCIYx1oyF8ZzEjDidL2cP32gLbvMstq5ijL7yGtqXS30t2xF3IH0bcSSWQqOJPaGuIAQNThvdt61BJ',
+        'appName': 'aplicacao_delinea'
+    },
 }
 
 # LOGIN_URL = '/admin/login/'
@@ -105,7 +106,7 @@ REST_FRAMEWORK = {
 }
 
 OAUTH2_PROVIDER = {
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
 }
 
 

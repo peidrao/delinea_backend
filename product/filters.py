@@ -2,7 +2,7 @@ from rest_framework.filters import BaseFilterBackend
 
 
 class ProductTitleFilter(BaseFilterBackend):
-    
+
     def filter_queryset(self, request, queryset, view):
         title = request.query_params.get(
             'title', None,

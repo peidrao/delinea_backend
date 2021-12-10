@@ -35,7 +35,7 @@ urlpatterns = [
     path('authentication/', include('authentication.urls')),
     path('products/', include('product.urls')),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path('api/v1/swagger/', schema_view.with_ui('swagger',
+    path('docs/', schema_view.with_ui('swagger',
          cache_timeout=0), name='schema-swagger-ui'),
 
 ]
