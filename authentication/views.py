@@ -12,7 +12,27 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = []
 
     def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            User.objects.create(
+                username=data['username'],
+                first_name=data['first_name'],
+                last_name=data['last_name'],
+                is_active=data['is_active'],
+                is_staff=data['is_staff'],
+                is_superuser=data['is_superuser'],
+                email=data['email'],
+                password=make_password(data['password'])
+            )
+            data.pop('password')
+            data.pop('is_staff')
+            data.pop('is_superuser')
+            data.pop('is_active')
+
+            return Response(data, status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status.HTTP_403_FORBIDDEN)
 
     def get_permissions(self):
         if self.action == 'list':

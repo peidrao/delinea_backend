@@ -78,9 +78,9 @@ SWAGGER_SETTINGS = {
         }
     },
     'OAUTH2_CONFIG': {
-        'clientId': 'q7LmUV8eU32Bek4Ne25sPbKzxg3j0CwQXDlD4A7Z',
-        'clientSecret': '01JRxn8ctNoOcWloYPqpMPNmCo4jBMWDpVx7bftk788SYo8jtJNCIYx1oyF8ZzEjDidL2cP32gLbvMstq5ijL7yGtqXS30t2xF3IH0bcSSWQqOJPaGuIAQNThvdt61BJ',
-        'appName': 'aplicacao_delinea'
+        'clientId': 'oqhp8GiXb8X6mTHTXJGtXsARlVjcGNHGA3DAfQ3g',
+        'clientSecret': 'K0MXrF8KmqAkwfJtcJQUnoV6lvABH97Xvxv6OqVrwZBhC7OQBqodp61lIM8yImLFLNMV91oTk2QbHHNGgt6BuBIm4murc7sEtGT8iG9LZHPCVdX61lh6c9yzPb9nnYlV',
+        'appName': 'delinea_app'
     },
 }
 
