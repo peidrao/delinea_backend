@@ -3,11 +3,11 @@ from rest_framework import serializers, viewsets, status, filters
 from .models import Product
 from .serializers import ProductSerializer, ProductAllSerializer
 from .filters import ProductTitleFilter, ProductPriceFilter
-from .permissions import ProductPermission
+from .permissions import ProductPermission, IsOwner
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    permission_classes = [ProductPermission]
+    permission_classes = [IsOwner, ProductPermission]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     filter_backends = (
@@ -18,7 +18,11 @@ class ProductViewSet(viewsets.ModelViewSet):
     search_fields = (
         'title',
         'price'
-    )
+    )   
+
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
 
     def create(self, request, *args, **kwargs):
         serializer = ProductSerializer(data=request.data)
@@ -40,10 +44,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
-        try:
-            instance = self.get_object()
-        except Exception as e:
-            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            serializer = ProductAllSerializer(instance)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        instance = self.get_object()
+        serializer = ProductAllSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)

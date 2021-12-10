@@ -6,14 +6,15 @@ from product.models import Product
 
 class ProductPermission(permissions.BasePermission):
 
-    # edit_methods = ("PUT", "PATCH", 'GET')
-
     def has_permission(self, request, view):
         if request.user.is_anonymous:
             return False
 
         if request.method == 'GET':
             if Product.objects.filter(owner=request.user).exists():
+                return True
+        if request.method == 'PATCH':
+            if Product.objects.filter(id=request.parser_context['kwargs']['pk'], owner=request.user):
                 return True
 
         if request.method == 'POST':
@@ -24,3 +25,13 @@ class ProductPermission(permissions.BasePermission):
             return True
 
         return False
+
+
+class IsOwner(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+
+        if request.user:
+            return obj.owner == request.user
+        else:
+            return False

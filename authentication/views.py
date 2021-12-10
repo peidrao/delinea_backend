@@ -1,44 +1,39 @@
-# import jwt
-
-from django.conf import settings
+from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
-from django.contrib.auth.hashers import make_password
-from rest_framework.decorators import api_view
-from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 from .models import User
 from .serializers import UserSerializer
-from rest_framework.decorators import authentication_classes, permission_classes
+from .permissions import IsSuperUser, IsOwner
+from django.contrib.auth.hashers import make_password
 
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.filter(is_active=True)
-    permission_classes = (AllowAny,)
+    permission_classes = []
 
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    def get_permissions(self):
+        if self.action == 'list':
+            self.permission_classes = [IsSuperUser, ]
+        elif self.action == 'retrieve':
+            self.permission_classes = [IsOwner]
+        return super(self.__class__, self).get_permissions()
 
-@api_view(['POST'])
-def create_user(request):
-    if request.data['password'] == '':
-        message = {'text': 'Você precisa de uma senha!'}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
-    try:
-        user = User.objects.create(
-            username=request.data['username'],
+    def update(self, request, *args, **kwargs):
+        try:
+            user = User.objects.get(id=kwargs['pk'])
+            user.username = request.data['username']
+            user.is_active = request.data['is_active']
+            user.first_name = request.data['first_name']
+            user.last_name = request.data['last_name']
+            user.is_superuser = request.data['is_superuser']
+            user.is_staff = request.data['is_staff']
+            user.email = request.data['email']
+            user.password = make_password(request.data['email'])
+            user.save()
+            return Response({'message': 'User updated successfully'}, status=status.HTTP_200_OK)
 
-            email=request.data['email'],
-            password=make_password(request.data['password']),
-            is_staff=request.data['is_staff'],
-            is_active=request.data['is_active'],
-            is_superuser=request.data['is_superuser']
-        )
-        serializer = UserSerializer(user, many=False)
-        return Response(serializer.data)
-    except:
-        message = {'text': 'Email já está cadastrado'}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
