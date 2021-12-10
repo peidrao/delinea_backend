@@ -10,7 +10,10 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('title', 'content', 'price')
 
-    
-    def create(self, validated_data):
 
-        return super().create(validated_data)
+class ProductAllSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    # owner_username = serializers.CharField(source='owner.username')
+    class Meta:
+        model = Product
+        fields = "__all__"

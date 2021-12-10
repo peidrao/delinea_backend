@@ -15,6 +15,10 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.filter(is_active=True)
 
+    def create(self, request, *args, **kwargs):
+        import pdb ; pdb.set_trace()
+        return super().create(request, *args, **kwargs)
+
 
 @api_view(['POST'])
 def create_user(request):
