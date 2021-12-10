@@ -63,7 +63,6 @@ class ProductTests(APITestCase):
         self.assertEqual(Product.objects.get().title,
                          'Monkey D Luffy: Action Figure')
 
-
     def test_destroy_product(self):
         product = baker.make(Product, owner=self.test_user)
 
@@ -72,3 +71,34 @@ class ProductTests(APITestCase):
         response = self.client.delete(url, HTTP_AUTHORIZATION=self.auth)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    # TODO: 403 - You do not have permission to perform this action
+    def test_search_product_by_title(self):
+        for _ in range(0, 5):
+            baker.make(Product, title='Macbook')
+        for _ in range(0, 5):
+            baker.make(Product, title='Iphone')
+
+        url = f"{reverse('products_urls:products-list')}?title=Iphone"
+
+    
+        response = self.client.get(url, format='json', HTTP_AUTHORIZATION=self.auth)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(5, len(response.data['results']))
+
+    # TODO: 403 - You do not have permission to perform this action
+    def test_search_product_by_price(self):
+        for _ in range(0, 5):
+            baker.make(Product, price=11.90)
+        for _ in range(0, 5):
+            baker.make(Product, price=11.91)
+        for _ in range(0, 5):
+            baker.make(Product, title=11.95)
+        for _ in range(0, 5):
+            baker.make(Product, title=12.90)
+
+        url = f"{reverse('products_urls:products-list')}?price=11.91"
+    
+        response = self.client.get(url, format='json', HTTP_AUTHORIZATION=self.auth)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(5, len(response.data['results']))
