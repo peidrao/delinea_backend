@@ -7,16 +7,18 @@ from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 from .models import User
 from .serializers import UserSerializer
+from rest_framework.decorators import authentication_classes, permission_classes
 
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.filter(is_active=True)
+    permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
-        import pdb ; pdb.set_trace()
         return super().create(request, *args, **kwargs)
 
 
@@ -28,6 +30,7 @@ def create_user(request):
     try:
         user = User.objects.create(
             username=request.data['username'],
+
             email=request.data['email'],
             password=make_password(request.data['password']),
             is_staff=request.data['is_staff'],

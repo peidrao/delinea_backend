@@ -6,13 +6,13 @@ from rest_framework import routers, permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from authentication.views import UserViewSet
-from product.views import ProductViewSet
+# from authentication.views import UserViewSet
+# from product.views import ProductViewSet
 
-router = routers.DefaultRouter()
+# router = routers.DefaultRouter()
 
-router.register(r'api/v1/users', UserViewSet, basename='user')
-router.register(r'api/v1/products', ProductViewSet, basename='product')
+# router.register(r'api/v1/users', UserViewSet, basename='user')
+# router.register(r'api/v1/products', ProductViewSet, basename='product')
 
 
 schema_view = get_schema_view(
@@ -30,10 +30,12 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('', include(router.urls)),
+    # path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api/users/', include('authentication.urls')),
+    path('authentication/', include('authentication.urls')),
+    path('products/', include('product.urls')),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path('api/v1/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    
+    path('api/v1/swagger/', schema_view.with_ui('swagger',
+         cache_timeout=0), name='schema-swagger-ui'),
+
 ]

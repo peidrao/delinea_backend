@@ -1,18 +1,18 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import UserViewSet
+from .views import ProductViewSet
 
 
 router = routers.DefaultRouter()
-router.register('users', UserViewSet, basename='users')
+router.register('products', ProductViewSet, basename='products')
 
 urlpatterns = [
     path(
         "",
         include(
-            (router.urls, 'authentication'),
-            namespace='authentication_urls',
+            (router.urls, 'product'),
+            namespace='products_urls',
         ),
     ),
 
