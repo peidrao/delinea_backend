@@ -1,6 +1,6 @@
 # :books: Delinea Backend
 
-## [Link da aplicação](https://delinea.herokuapp.com/).
+## [Link da aplicação](https://delinea.herokuapp.com/)
 
 ## :ledger: Swagger
 
