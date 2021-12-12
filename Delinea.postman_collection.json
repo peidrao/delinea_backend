@@ -1,0 +1,778 @@
+{
+	"info": {
+		"_postman_id": "56957e08-62d2-4645-ba75-e802e3c11ffc",
+		"name": "Delinea",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Live",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Create User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"peidrao\",\n  \"first_name\": \"Pedro\",\n  \"last_name\": \"Fonseca\",\n  \"is_superuser\": true,\n  \"is_staff\": true,\n  \"email\": \"pedro@gmail.com\",\n  \"password\": \"tecarch123\",\n  \"is_active\": true,\n  \"gender\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://delinea.herokuapp.com/authentication/users/",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"authentication",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "oqhp8GiXb8X6mTHTXJGtXsARlVjcGNHGA3DAfQ3g",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "K0MXrF8KmqAkwfJtcJQUnoV6lvABH97Xvxv6OqVrwZBhC7OQBqodp61lIM8yImLFLNMV91oTk2QbHHNGgt6BuBIm4murc7sEtGT8iG9LZHPCVdX61lh6c9yzPb9nnYlV",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "peidrao",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "tecarch123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://delinea.herokuapp.com/o/token/",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"o",
+										"token",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "All Products",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://delinea.herokuapp.com/products/products/",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product by Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://delinea.herokuapp.com/products/products/2/",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"products",
+										"products",
+										"2",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Query-Params [Price]",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://delinea.herokuapp.com/products/products?price=156.85",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"products",
+										"products"
+									],
+									"query": [
+										{
+											"key": "price",
+											"value": "156.85"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Query-Params [Title]",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://delinea.herokuapp.com/products/products/?title=Zoro: One Piece",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"products",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "Zoro: One Piece"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Luffy One Pice\",\n    \"content\": \"The best action figure\",\n    \"price\": 197.45\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://delinea.herokuapp.com/products/products/",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Destroy Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://delinea.herokuapp.com/products/products/4/",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"products",
+										"products",
+										"4",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update  by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Luffy One Pice\",\n    \"content\": \"The best action figure\",\n    \"price\": 197.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://delinea.herokuapp.com/products/products/2/",
+									"protocol": "https",
+									"host": [
+										"delinea",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"products",
+										"products",
+										"2",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Local",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Create User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"peidrao\",\n  \"first_name\": \"Pedro\",\n  \"last_name\": \"Fonseca\",\n  \"is_superuser\": true,\n  \"is_staff\": true,\n  \"email\": \"pedro@gmail.com\",\n  \"password\": \"tecarch123\",\n  \"is_active\": true,\n  \"gender\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/authentication/users/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"authentication",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "oqhp8GiXb8X6mTHTXJGtXsARlVjcGNHGA3DAfQ3g",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "K0MXrF8KmqAkwfJtcJQUnoV6lvABH97Xvxv6OqVrwZBhC7OQBqodp61lIM8yImLFLNMV91oTk2QbHHNGgt6BuBIm4murc7sEtGT8iG9LZHPCVdX61lh6c9yzPb9nnYlV",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "peidrao",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "tecarch123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/o/token/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"o",
+										"token",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "All Products",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/products/products/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product by Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/products/products/2/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"products",
+										"products",
+										"2",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Query-Params [Price]",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/products/products/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Query-Params [Title]",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/products/products/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Luffy One Pice\",\n    \"content\": \"The best action figure\",\n    \"price\": 197.45\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/products/products/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Destroy Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Luffy One Pice\",\n    \"content\": \"The best action figure\",\n    \"price\": 197.45\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/products/products/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update  by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "zEUnHRlKIVJ1uBsRuN9V7OkeVf68z2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Luffy One Pice\",\n    \"content\": \"The best action figure\",\n    \"price\": 197.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/products/products/2/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"products",
+										"products",
+										"2",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
